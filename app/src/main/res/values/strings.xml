@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">Hackaton_TechTravel</string>
+    <string name="aun_no_eres_miembro">Aun no eres miembro</string>
 </resources>
