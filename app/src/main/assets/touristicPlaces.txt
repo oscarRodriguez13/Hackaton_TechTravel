@@ -1,0 +1,15 @@
+Evento Cultural;https://img.lalr.co/cms/2019/04/09182343/Mundo-Aventura.jpg;5.0 5.0 4.5 4.0 4.5;4.622122050097158 -74.13482906257143
+Ferias;https://image-tc.galaxy.tf/wijpeg-3u1gsphbdnfoevak1lbinqpqx/monserrate_standard.jpg?crop=200%2C0%2C1200%2C900&width=1140;4.0 5.0 4.5 3.5 4.0;4.605972113018384 -74.05569721951258
+Digifix;https://media1.tenor.com/m/-GXh9g7jNvsAAAAC/jojos-bizarre-adventures-it-was-me.gif;3.0 3.0 3.5 4.0 3.0;4.700129592521525 -74.08931311728729
+Mundo Aventura;https://img.lalr.co/cms/2019/04/09182343/Mundo-Aventura.jpg;5.0 5.0 4.5 4.0 4.5;4.622122050097158 -74.13482906257143
+Monserrate;https://image-tc.galaxy.tf/wijpeg-3u1gsphbdnfoevak1lbinqpqx/monserrate_standard.jpg?crop=200%2C0%2C1200%2C900&width=1140;4.0 5.0 4.5 3.5 4.0;4.605972113018384 -74.05569721951258
+Digifix;https://media1.tenor.com/m/-GXh9g7jNvsAAAAC/jojos-bizarre-adventures-it-was-me.gif;3.0 3.0 3.5 4.0 3.0;4.700129592521525 -74.08931311728729
+Mundo Aventura;https://img.lalr.co/cms/2019/04/09182343/Mundo-Aventura.jpg;5.0 5.0 4.5 4.0 4.5;4.622122050097158 -74.13482906257143
+Monserrate;https://image-tc.galaxy.tf/wijpeg-3u1gsphbdnfoevak1lbinqpqx/monserrate_standard.jpg?crop=200%2C0%2C1200%2C900&width=1140;4.0 5.0 4.5 3.5 4.0;4.605972113018384 -74.05569721951258
+Digifix;https://media1.tenor.com/m/-GXh9g7jNvsAAAAC/jojos-bizarre-adventures-it-was-me.gif;3.0 3.0 3.5 4.0 3.0;4.700129592521525 -74.08931311728729
+Mundo Aventura;https://img.lalr.co/cms/2019/04/09182343/Mundo-Aventura.jpg;5.0 5.0 4.5 4.0 4.5;4.622122050097158 -74.13482906257143
+Monserrate;https://image-tc.galaxy.tf/wijpeg-3u1gsphbdnfoevak1lbinqpqx/monserrate_standard.jpg?crop=200%2C0%2C1200%2C900&width=1140;4.0 5.0 4.5 3.5 4.0;4.605972113018384 -74.05569721951258
+Digifix;https://media1.tenor.com/m/-GXh9g7jNvsAAAAC/jojos-bizarre-adventures-it-was-me.gif;3.0 3.0 3.5 4.0 3.0;4.700129592521525 -74.08931311728729
+Mundo Aventura;https://img.lalr.co/cms/2019/04/09182343/Mundo-Aventura.jpg;5.0 5.0 4.5 4.0 4.5;4.622122050097158 -74.13482906257143
+Monserrate;https://image-tc.galaxy.tf/wijpeg-3u1gsphbdnfoevak1lbinqpqx/monserrate_standard.jpg?crop=200%2C0%2C1200%2C900&width=1140;4.0 5.0 4.5 3.5 4.0;4.605972113018384 -74.05569721951258
+Digifix;https://media1.tenor.com/m/-GXh9g7jNvsAAAAC/jojos-bizarre-adventures-it-was-me.gif;3.0 3.0 3.5 4.0 3.0;4.700129592521525 -74.08931311728729

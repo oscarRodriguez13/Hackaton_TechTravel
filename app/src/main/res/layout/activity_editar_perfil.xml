@@ -76,4 +76,13 @@
         app:srcCompat="@android:drawable/ic_dialog_alert"
         android:layout_alignParentEnd="true"/>
 
+    <Button
+        android:id="@+id/button_go_to_app"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Ir a la app"
+        android:layout_centerHorizontal="true"
+        android:layout_below="@id/editText_bio"
+        android:layout_marginTop="24dp"/>
+
 </RelativeLayout>

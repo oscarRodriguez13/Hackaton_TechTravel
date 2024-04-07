@@ -5,4 +5,14 @@
     <string name="search">Search</string>
     <string name="location">Location</string>
     <string name="avistamiento">Avistamiento</string>
+
+    <string name="title_home">Home</string>
+    <string name="title_search">Search</string>
+    <string name="title_map">Map</string>
+    <string name="title_profile">Profile</string>
+    <string name="go_back">Go Back</string>
+    <string name="rellenoDescripcion">relleno para la descripción, luego ponemos la descripción real completa :)</string>
+    <string name="view_reviews">ver reseñas</string>
+    <string name="review_filler">reseña de relleno :P</string>
+    <string name="more_info">more info</string>
 </resources>
