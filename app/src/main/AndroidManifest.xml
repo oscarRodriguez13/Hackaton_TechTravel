@@ -13,7 +13,13 @@
         android:theme="@style/Theme.Hackaton_TechTravel"
         tools:targetApi="31">
         <activity
-            android:name=".MainActivity"
+            android:name=".EditarPerfilActivity"
+            android:exported="false" />
+        <activity
+            android:name=".CrearCuentaActivity"
+            android:exported="false" />
+        <activity
+            android:name=".IniciarSesionActivity"
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
