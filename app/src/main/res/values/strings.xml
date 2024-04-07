@@ -4,4 +4,5 @@
     <string name="title_activity_maps">MapsActivity</string>
     <string name="search">Search</string>
     <string name="location">Location</string>
+    <string name="avistamiento">Avistamiento</string>
 </resources>
