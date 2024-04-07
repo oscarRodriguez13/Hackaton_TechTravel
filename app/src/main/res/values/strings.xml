@@ -1,4 +1,7 @@
 <resources>
     <string name="app_name">Hackaton_TechTravel</string>
     <string name="aun_no_eres_miembro">Aun no eres miembro</string>
+    <string name="title_activity_maps">MapsActivity</string>
+    <string name="search">Search</string>
+    <string name="location">Location</string>
 </resources>
