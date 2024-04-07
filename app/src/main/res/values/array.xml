@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string-array name="avistamientos_array">
+        <item>Avistamiento 1</item>
+        <item>Avistamiento 2</item>
+        <item>Avistamiento 3</item>
+        <item>Avistamiento 4</item>
+        <item>Avistamiento 5</item>
+        <item>Avistamiento 6</item>
+        <item>Avistamiento 7</item>
+        <item>Avistamiento 8</item>
+        <item>Avistamiento 9</item>
+        <item>Avistamiento 10</item>
+    </string-array>
+</resources>
