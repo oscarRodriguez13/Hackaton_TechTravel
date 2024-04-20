@@ -56,4 +56,7 @@ dependencies {
 
     //Home
     implementation("com.squareup.picasso:picasso:2.71828")
+
+    //Views
+    implementation ("de.hdodenhof:circleimageview:3.1.0")
 }

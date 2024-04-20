@@ -23,7 +23,7 @@ class IniciarSesionActivity : AppCompatActivity() {
             startActivity(
                 Intent(
                     applicationContext,
-                    EditarPerfilActivity::class.java
+                    TouristScreen::class.java
                 )
             )
         }

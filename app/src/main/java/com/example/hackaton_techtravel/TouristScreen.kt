@@ -38,17 +38,15 @@ class TouristScreen : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    finish()
                     startActivity(Intent(this, TouristScreen::class.java))
                     true
                 }
                 R.id.navigation_search -> {
-                    finish()
                     startActivity(Intent(this, TouristSearchActivity::class.java))
                     true
                 }
                 R.id.navigation_profile -> {
-                    //startActivity(Intent(this, ProfileActivity::class.java))
+                    startActivity(Intent(this, ProfileActivity::class.java))
                     true
                 }
                 else -> false
