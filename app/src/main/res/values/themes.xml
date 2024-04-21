@@ -7,7 +7,7 @@
 
     <style name="AppTheme" parent="Theme.MaterialComponents.DayNight.DarkActionBar">
         <item name="colorPrimary">@color/colorSecundary</item>
-        <item name="colorPrimaryDark">@color/colorPrimaryDark</item>
+        <item name="colorPrimaryDark">@color/colorSecundary</item>
     </style>
 
     <style name="Theme.Hackaton_TechTravel" parent="Base.Theme.Hackaton_TechTravel" />

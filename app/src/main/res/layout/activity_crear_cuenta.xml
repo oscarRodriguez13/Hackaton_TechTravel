@@ -9,6 +9,16 @@
     android:padding="16dp"
     android:textColor="@android:color/black">
 
+    <de.hdodenhof.circleimageview.CircleImageView
+        android:id="@+id/app_logo"
+        android:layout_width="match_parent"
+        android:layout_height="200dp"
+        android:scaleType="centerCrop"
+        android:layout_marginBottom="15dp"
+        android:layout_above="@id/titulo_registro"
+        android:layout_centerHorizontal="true"
+        android:src="@mipmap/ic_techtravel" />
+
     <EditText
         android:id="@+id/etName"
         android:layout_width="match_parent"
@@ -41,7 +51,7 @@
         android:textColor="@color/black"/>
 
     <EditText
-        android:id="@+id/etExperience"
+        android:id="@+id/etConfirmPasswrod"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_below="@+id/etPassword"
@@ -56,16 +66,9 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Registrarse"
-        android:layout_below="@id/etPassword"
+        android:layout_below="@id/etConfirmPasswrod"
         android:layout_centerHorizontal="true"
         android:layout_marginTop="60dp" />
-
-    <ImageView
-        android:id="@+id/icon_paseador"
-        android:layout_width="wrap_content"
-        android:layout_height="200dp"
-        app:srcCompat="@drawable/loguito_principal"
-        android:layout_above="@id/titulo_registro" />
 
     <TextView
         android:id="@+id/titulo_registro"

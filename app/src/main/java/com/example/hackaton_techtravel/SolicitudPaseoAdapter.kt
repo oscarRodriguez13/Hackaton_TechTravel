@@ -12,10 +12,10 @@ class SolicitudPaseoAdapter(
 ) : RecyclerView.Adapter<SolicitudPaseoAdapter.ProfileViewHolder>() {
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
-        val profileImage: CircleImageView = itemView.findViewById(R.id.profile_image)
-        val tipoAve: TextView = itemView.findViewById(R.id.tipo_ave)
-        val descripcion: TextView = itemView.findViewById(R.id.descripcion)
-        val fecha: TextView = itemView.findViewById(R.id.fecha)
+        private val profileImage: CircleImageView = itemView.findViewById(R.id.profile_image)
+        private val tipoAve: TextView = itemView.findViewById(R.id.tipo_ave)
+        private val descripcion: TextView = itemView.findViewById(R.id.descripcion)
+        private val fecha: TextView = itemView.findViewById(R.id.fecha)
 
         fun bind(avistamiento: Avistamiento) {
             profileImage.setImageResource(avistamiento.image)

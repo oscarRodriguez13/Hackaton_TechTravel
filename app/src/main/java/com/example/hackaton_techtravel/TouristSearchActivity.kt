@@ -16,41 +16,34 @@ private const val FILE_NAME = "touristicPlaces.txt"
 class TouristSearchActivity : AppCompatActivity() {
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var searchView: SearchView
-    private lateinit var adapter: TouristScreenTouristicPlaceAdapter
+    private lateinit var searchAdapter: SearchAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.search_view)
 
-        // Initialize views
+        // Definir la lista de datos (Avistamiento)
+        val avistamientos = listOf(
+            Avistamiento(R.drawable.img_malacoptila, "Malacoptila", "Familia de los Bucconidae", "08/01/2024"),
+            Avistamiento(R.drawable.img_guacharaca, "Guacharaca", "Ave de bosque", "02/03/2024"),
+            Avistamiento(R.drawable.img_loro_multicolor, "Loro multicolor", "Ave insignia de Caldas", "25/06/2024"),
+            Avistamiento(R.drawable.img_cuclillo_canelo, "Cuclillo Canelo", "Vive en tierras bajas tropicales", "03/04/2023"),
+            Avistamiento(R.drawable.img_paujil_colombiano, "Paujil colombiano", "Ave galliforme de la familia Cracidae", "20/04/2024"),
+            Avistamiento(R.drawable.img_pava_andina, "Pava andina", "Especie de ave galliforme", "17/11/2022"),
+            Avistamiento(R.drawable.img_paloma_colorada, "Paloma colorada", "Es una especie sedentaria", "06/10/2023"),
+            Avistamiento(R.drawable.img_garrapatero_pijui, "Garrapatero pijui", "Especie de ave cuculiforme", "15/03/2023"),
+            Avistamiento(R.drawable.img_barranquero, "Barranquero", "Ave nativa de America del Sur", "14/07/2023")
+        )
+
+        // Instanciar el adaptador
+        searchAdapter = SearchAdapter(avistamientos)
+
+        // Configurar el RecyclerView
         recyclerView = findViewById(R.id.recyclerView)
-        searchView = findViewById(R.id.searchView)
-
-        // Set up RecyclerView
+        recyclerView.adapter = searchAdapter
         recyclerView.layoutManager = LinearLayoutManager(this)
-        val cardList = mutableListOf<TouristicPlace>()
-        // Load touristic places from the text file
-        val places: ArrayList<TouristicPlace> = readTouristicPlacesFromTxtFile(this)
-        for (place in places) {
-            cardList.add(place)
-        }
-        adapter = TouristScreenTouristicPlaceAdapter(cardList)
-        recyclerView.adapter = adapter
 
-        // Set up SearchView listener
-        searchView.setOnQueryTextListener(object : SearchView.OnQueryTextListener {
 
-            override fun onQueryTextSubmit(query: String): Boolean {
-                searchView.clearFocus()
-                adapter.filter.filter(query)
-                return false
-            }
-            override fun onQueryTextChange(newText: String): Boolean {
-                adapter.filter.filter(newText)
-                return false
-            }
-        })
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
 
         // Set listener for BottomNavigationView items
@@ -76,48 +69,5 @@ class TouristSearchActivity : AppCompatActivity() {
         }
     }
 
-    private fun readTouristicPlacesFromTxtFile(context: Context): ArrayList<TouristicPlace> {
-        val touristicPlaceList = ArrayList<TouristicPlace>()
 
-        try {
-            // Open the file from the assets folder
-            val inputStream: InputStream = context.assets.open(FILE_NAME)
-            val reader = BufferedReader(InputStreamReader(inputStream))
-
-            var line: String?
-
-            // Read each line from the file
-            while (reader.readLine().also { line = it } != null) {
-                val parts = line?.split(";")
-
-                if (parts?.size == 4) {
-                    val name = parts[0]
-                    val picture = parts[1]
-                    val scoresString = parts[2].split(" ") // Splitting scores separated by space
-                    val coordinates = parts[3].split(" ")
-                    val scores = ArrayList<Float>()
-                    val coordinateArray = ArrayList<String>()
-                    // Convert each score to float and add to scores list
-                    for (scoreString in scoresString) {
-                        val score = scoreString.toFloatOrNull() ?: continue
-                        scores.add(score)
-                    }
-                    for (coord in coordinates) {
-                        coordinateArray.add(coord)
-                    }
-                    // Create an TouristicPlace object and add it to the list
-                    val TouristicPlace = TouristicPlace(name, picture, scores, coordinateArray)
-                    touristicPlaceList.add(TouristicPlace)
-                }
-            }
-
-            // Close the InputStream when done
-            inputStream.close()
-
-        } catch (e: IOException) {
-            e.printStackTrace()
-        }
-
-        return touristicPlaceList
-    }
 }
