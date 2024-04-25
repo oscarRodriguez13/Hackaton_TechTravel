@@ -52,7 +52,8 @@ dependencies {
 
     // Maps
     implementation("com.google.android.gms:play-services-location:21.2.0")
-    implementation("com.google.android.gms:play-services-maps:18.2.0")
+    implementation("org.osmdroid:osmdroid-android:6.1.14")
+    implementation("com.github.MKergall:osmbonuspack:6.9.0")
 
     //Home
     implementation("com.squareup.picasso:picasso:2.71828")

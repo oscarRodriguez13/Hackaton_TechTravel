@@ -1,177 +1,247 @@
 package com.example.hackaton_techtravel
 
+import android.Manifest
 import android.annotation.SuppressLint
 import android.app.Activity
 import android.content.Intent
-import android.content.pm.PackageManager
-import android.location.Geocoder
 import androidx.appcompat.app.AppCompatActivity
+import android.content.pm.PackageManager
+import android.graphics.Color
+import android.location.Geocoder
 import android.os.Bundle
+import android.os.StrictMode
 import android.provider.MediaStore
+import android.util.Log
+import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.content.ContextCompat
 import com.example.hackaton_techtravel.PermissionCodes.Companion.CAMERA_PERMISSION_CODE
 import com.example.hackaton_techtravel.PermissionCodes.Companion.LOCATION_PERMISSION_CODE
-
-import com.google.android.gms.maps.CameraUpdateFactory
-import com.google.android.gms.maps.GoogleMap
-import com.google.android.gms.maps.OnMapReadyCallback
-import com.google.android.gms.maps.SupportMapFragment
-import com.google.android.gms.maps.model.LatLng
-import com.google.android.gms.maps.model.MarkerOptions
 import com.example.hackaton_techtravel.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
+import com.google.android.gms.location.LocationCallback
+import com.google.android.gms.location.LocationRequest
+import com.google.android.gms.location.LocationResult
+import com.google.android.gms.location.LocationServices
+import org.osmdroid.api.IMapController
+import org.osmdroid.bonuspack.routing.OSRMRoadManager
+import org.osmdroid.bonuspack.routing.RoadManager
+import org.osmdroid.config.Configuration
+import org.osmdroid.tileprovider.tilesource.TileSourceFactory
+import org.osmdroid.util.GeoPoint
+import org.osmdroid.views.overlay.Marker
+import org.osmdroid.views.overlay.Polyline
+import java.util.ArrayList
 
-class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
-    private var mMap: GoogleMap? = null
-    private var geocoder: Geocoder? = null
-    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+class MapsActivity : AppCompatActivity() {
+    companion object {
+        private val aguadas = GeoPoint(5.613140, -75.457597)
+        private const val lowerLeftLatitude = 5.447439
+        private const val lowerLeftLongitude = -75.586738
+        private const val upperRightLatitude = 5.744714
+        private const val upperRightLongitude = -75.317356
+    }
+
     private lateinit var binding: ActivityMapsBinding
+    private val startPoint = GeoPoint(4.6287662, -74.0636298647595)
+    private lateinit var mFusedLocationClient: FusedLocationProviderClient
+    private var mrk: Marker? = null
+    private var roadOverlay: Polyline? = null
+    private lateinit var roadManager: RoadManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-
         binding = ActivityMapsBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setUpButtonsWithoutPermissions()
-        setUpEventListenersWithoutPermissions()
+        startOSM()
+        mFusedLocationClient = LocationServices.getFusedLocationProviderClient(this)
+        setUpButtonsDoNotRequirePermissions()
+        setUpButtonsRequirePermissions()
 
-        // Obtain the SupportMapFragment and get notified when the map is ready to be used.
-        val mapFragment = supportFragmentManager
-            .findFragmentById(R.id.map) as SupportMapFragment
-        mapFragment.getMapAsync(this)
+        // TODO for development; change to false for production
+        val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
+        StrictMode.setThreadPolicy(policy)
+        setUpMarkers()
     }
 
-    /**
-     * Manipulates the map once available.
-     * This callback is triggered when the map is ready to be used.
-     * This is where we can add markers or lines, add listeners or move the camera. In this case,
-     * we just add a marker near Sydney, Australia.
-     * If Google Play services is not installed on the device, the user will be prompted to install
-     * it inside the SupportMapFragment. This method will only be triggered once the user has
-     * installed Google Play services and returned to the app.
-     */
-    override fun onMapReady(googleMap: GoogleMap) {
-        mMap = googleMap
+    private fun setUpMarkers() {
+        // 5.607519, -75.450010
+        val marker1 = createMarker(GeoPoint(5.607519, -75.450010), "Aguadas", "Avistamiento Climatico", 0)
+        // 5.614931, -75.463819
+        val marker2 = createMarker(GeoPoint(5.614931, -75.463819), "Aguadas", "Avistamiento Animal", 0)
+        // 5.615662, -75.463461
+        val marker3 = createMarker(GeoPoint(5.615662, -75.463461), "Monserrate", "Avistamiento Camara", 0)
 
-        mMap!!.uiSettings.isZoomGesturesEnabled = true
-
-        // Add a marker in Sydney and move the camera
-        val sydney = LatLng(-34.0, 151.0)
-        mMap!!.addMarker(MarkerOptions().position(sydney).title("Marker in Sydney"))
-        mMap!!.moveCamera(CameraUpdateFactory.newLatLng(sydney))
+        marker1?.let { binding.osmMap.overlays.add(it) }
+        marker2?.let { binding.osmMap.overlays.add(it) }
+        marker3?.let { binding.osmMap.overlays.add(it) }
     }
 
-    private fun setUpButtonsWithoutPermissions() {
+    private fun setUpButtonsDoNotRequirePermissions() {
+        binding.searchLocationMap.setOnEditorActionListener { _, actionId, _ ->
+            if (actionId == EditorInfo.IME_ACTION_SEARCH) {
+                val location = binding.searchLocationMap.text.toString()
+                if (location.isNotEmpty()) {
+                    val loc = getLocationFromAddress(location)
+                    val mapController: IMapController = binding.osmMap.controller
+                    mapController.setZoom(9.5)
+                    mapController.setCenter(loc)
+                    if (mrk != null) {
+                        binding.osmMap.overlays.remove(mrk)
+                    }
+                    mrk = createMarker(loc, location, binding.mapSpinner.selectedItem.toString(), 0)
+                    mrk?.let { binding.osmMap.overlays.add(it) }
+                } else {
+                    Toast.makeText(this, "Please enter a location", Toast.LENGTH_SHORT).show()
+                }
+            }
+            false
+        }
+
         binding.mapXButton.setOnClickListener {
-            binding.selectedLocation.text = ""
+            binding.searchLocationMap.text.clear()
         }
 
         binding.mapSearchButton.setOnClickListener {
-            searchLocationWithGeoCoder(binding.searchLocationMap.text.toString())
+            val location = binding.searchLocationMap.text.toString()
+            if (location.isNotEmpty()) {
+                val loc = getLocationFromAddress(location)
+                val mapController: IMapController = binding.osmMap.controller
+                mapController.setZoom(9.5)
+                mapController.setCenter(loc)
+                if (mrk != null) {
+                    binding.osmMap.overlays.remove(mrk)
+                }
+                mrk = createMarker(loc, location, binding.mapSpinner.selectedItem.toString(), 0)
+                mrk?.let { binding.osmMap.overlays.add(it) }
+            } else {
+                Toast.makeText(this, "Please enter a location", Toast.LENGTH_SHORT).show()
+            }
+        }
+    }
+
+    private fun getLocationFromAddress(location: String): GeoPoint {
+        val geocoder = android.location.Geocoder(this)
+        val addresses = geocoder.getFromLocationName(location, 1, lowerLeftLatitude, lowerLeftLongitude, upperRightLatitude, upperRightLongitude)
+        return if (!addresses.isNullOrEmpty()) {
+            GeoPoint(addresses[0].latitude, addresses[0].longitude)
+        } else {
+            aguadas
+        }
+    }
+
+    private fun setUpButtonsRequirePermissions() {
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED) {
+            setUpButtonsWithLocationPermissions()
+        } else {
+            binding.mapLocationButton.setOnClickListener {
+                checkPermissionForLocation(this)
+            }
         }
 
+        if (ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            setUpButtonsWithCameraPermissions()
+        } else {
+            binding.mapAddImageButton.setOnClickListener {
+                checkPermissionForCamera(this)
+            }
+        }
+    }
+
+    private fun setUpButtonsWithLocationPermissions() {
         binding.mapLocationButton.setOnClickListener {
-            checkPermissionForLocation(this)
-        }
-
-        binding.mapAddImageButton.setOnClickListener {
-            checkPermissionForCamera(this)
+            obtainLocation()
         }
     }
 
-    private fun setUpEventListenersWithoutPermissions() {
-
-    }
-
-    private fun setUpButtonsWithLocationPermission() {
+    private fun setUpButtonsWithoutLocationPermissions() {
         binding.mapLocationButton.setOnClickListener {
-            val latIng = getCurrentLocation()
-            setUpMarker(latIng)
+            Toast.makeText(this, "Please allow location permission", Toast.LENGTH_SHORT).show()
         }
     }
 
-    private fun disableButtonsWithLocationPermission() {
-        // Deactivate button
-        binding.mapLocationButton.isEnabled = false
-    }
-
-    private fun setUpButtonsWithCameraPermission() {
+    private fun setUpButtonsWithCameraPermissions() {
         binding.mapAddImageButton.setOnClickListener {
             val intent = Intent(MediaStore.ACTION_IMAGE_CAPTURE)
             startActivity(intent)
         }
     }
 
-    private fun disableButtonsWithCameraPermission() {
-        // Deactivate button
-        binding.mapAddImageButton.isEnabled = false
+    private fun setUpButtonsWithoutCameraPermissions() {
+        binding.mapAddImageButton.setOnClickListener {
+            Toast.makeText(this, "Please allow camera permission", Toast.LENGTH_SHORT).show()
+        }
     }
 
-    private fun searchLocationWithGeoCoder(location: String) {
-        if(location.isEmpty() || geocoder == null) {
-            Toast.makeText(this, "Location is empty", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        val addressList = geocoder!!.getFromLocationName(location, 1)
-
-        if (!addressList.isNullOrEmpty()) {
-            val address = addressList[0]
-            val latLng = LatLng(address.latitude, address.longitude)
-
-            if (mMap == null) {
-                return
-            }
-
-            setUpMarker(latLng)
-        } else {
-            Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show()
-        }
+    private fun startOSM() {
+        // Set userAgent to identify the app to the OSM service
+        Configuration.getInstance().userAgentValue = "com.example.hackaton_techtravel"
+        binding.osmMap.setTileSource(TileSourceFactory.MAPNIK)
+        binding.osmMap.setMultiTouchControls(true)
+        roadManager = OSRMRoadManager(this, "ANDROID")
+        val mapController: IMapController = binding.osmMap.controller
+        mapController.setZoom(9.5)
+        mapController.setCenter(startPoint)
     }
 
     @SuppressLint("MissingPermission")
-    private fun getCurrentLocation(): LatLng {
-        var latLng = LatLng(0.0, 0.0)
+    private fun obtainLocation(){
         mFusedLocationClient.lastLocation.addOnSuccessListener { location ->
             if (location != null) {
-                latLng = LatLng(location.latitude, location.longitude)
-            } else {
-                Toast.makeText(this, "Location not found", Toast.LENGTH_SHORT).show()
+                val currentLocation = GeoPoint(location.latitude, location.longitude)
+                val mapController: IMapController = binding.osmMap.controller
+                mapController.setZoom(9.5)
+                mapController.setCenter(currentLocation)
+                val name = Geocoder(this).getFromLocation(location.latitude, location.longitude, 1)
+                createMarker(currentLocation, name!![0].featureName, binding.mapSpinner.selectedItem.toString(), 0)
             }
         }
-
-        return latLng
     }
 
-    private fun setUpMarker(latLng: LatLng) {
-        if (mMap == null) {
-            return
+    override fun onResume() {
+        super.onResume()
+        binding.osmMap.onResume()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        binding.osmMap.onPause()
+    }
+
+    @SuppressLint("UseCompatLoadingForDrawables")
+    private fun createMarker(p: GeoPoint, title: String?, desc: String?, iconID: Int): Marker? {
+        var marker: Marker? = null
+        marker = Marker(binding.osmMap)
+        title?.let { marker.title = it }
+        desc?.let { marker.subDescription = it }
+
+        if (iconID != 0) {
+            val myIcon = resources.getDrawable(iconID, theme)
+            marker.icon = myIcon
         }
-        mMap!!.clear()
-        mMap!!.addMarker(MarkerOptions().position(latLng).title("Avistamiento"))
-        mMap!!.moveCamera(CameraUpdateFactory.zoomTo(30f))
-        mMap!!.animateCamera(CameraUpdateFactory.newLatLng(latLng))
+        marker.position = p
+        marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)
+        return marker
     }
 
     private fun checkPermissionForLocation(activity: AppCompatActivity) {
         when{
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.ACCESS_FINE_LOCATION) == PackageManager.PERMISSION_GRANTED -> {
                 // Permission already granted
-                setUpButtonsWithLocationPermission()
+                setUpButtonsWithLocationPermissions()
             }
 
-            shouldShowRequestPermissionRationale(android.Manifest.permission.ACCESS_FINE_LOCATION) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_FINE_LOCATION) -> {
                 // If user previously denied the permission
                 Toast.makeText(this, "Permission previously denied", Toast.LENGTH_SHORT).show()
-                 requestPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE, "Needed for locating person")
+                requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE, "Needed for locating person")
             }
 
             else -> {
                 // Always call the own function to request permission, not the system one (requestPermissions)
-                requestPermission(this, android.Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE, "Needed for locating person")
+                requestPermission(this, Manifest.permission.ACCESS_FINE_LOCATION, LOCATION_PERMISSION_CODE, "Needed for locating person")
             }
 
         }
@@ -179,20 +249,20 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
 
     private fun checkPermissionForCamera(activity: AppCompatActivity) {
         when{
-            ContextCompat.checkSelfPermission(this, android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
+            ContextCompat.checkSelfPermission(this, Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED -> {
                 // Permission already granted
-                setUpButtonsWithCameraPermission()
+                setUpButtonsWithCameraPermissions()
             }
 
-            shouldShowRequestPermissionRationale(android.Manifest.permission.CAMERA) -> {
+            shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) -> {
                 // If user previously denied the permission
                 Toast.makeText(this, "Permission previously denied", Toast.LENGTH_SHORT).show()
-                requestPermission(this, android.Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE, "Needed for taking pictures")
+                requestPermission(this, Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE, "Needed for capturing images")
             }
 
             else -> {
                 // Always call the own function to request permission, not the system one (requestPermissions)
-                requestPermission(this, android.Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE, "Needed for taking pictures")
+                requestPermission(this, Manifest.permission.CAMERA, CAMERA_PERMISSION_CODE, "Needed for capturing images")
             }
 
         }
@@ -205,13 +275,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
             requestPermissions(arrayOf(permission), requestCode)
         } else {
-            when (requestCode) {
-                LOCATION_PERMISSION_CODE -> {
-                    setUpButtonsWithLocationPermission()
-                }
-                CAMERA_PERMISSION_CODE -> {
-                    setUpButtonsWithCameraPermission()
-                }
+            // Permission granted
+            when(requestCode) {
+                LOCATION_PERMISSION_CODE -> setUpButtonsWithLocationPermissions()
+                CAMERA_PERMISSION_CODE -> setUpButtonsWithCameraPermissions()
             }
         }
     }
@@ -221,10 +288,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             LOCATION_PERMISSION_CODE -> {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
-                    setUpButtonsWithLocationPermission()
+                    setUpButtonsWithLocationPermissions()
                 } else {
                     // Permission denied
-                    disableButtonsWithLocationPermission()
+                    setUpButtonsWithoutLocationPermissions()
                 }
                 return
             }
@@ -232,10 +299,10 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             CAMERA_PERMISSION_CODE -> {
                 if((grantResults.isNotEmpty() && grantResults[0] == PackageManager.PERMISSION_GRANTED)) {
                     // Permission granted
-                    setUpButtonsWithCameraPermission()
+                    setUpButtonsWithCameraPermissions()
                 } else {
                     // Permission denied
-                    disableButtonsWithCameraPermission()
+                    setUpButtonsWithoutCameraPermissions()
                 }
                 return
             }
@@ -245,4 +312,5 @@ class MapsActivity : AppCompatActivity(), OnMapReadyCallback {
             }
         }
     }
+
 }

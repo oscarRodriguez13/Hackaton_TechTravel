@@ -45,6 +45,10 @@ class TouristScreen : AppCompatActivity() {
                     startActivity(Intent(this, TouristSearchActivity::class.java))
                     true
                 }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    true
+                }
                 R.id.navigation_profile -> {
                     startActivity(Intent(this, ProfileActivity::class.java))
                     true
