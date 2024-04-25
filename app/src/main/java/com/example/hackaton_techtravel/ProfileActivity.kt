@@ -1,9 +1,13 @@
 package com.example.hackaton_techtravel
 
+<<<<<<< Updated upstream
 import android.content.ContentValues
 import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
+=======
+import android.content.Intent
+>>>>>>> Stashed changes
 import android.os.Bundle
 import android.provider.MediaStore
 import android.widget.ImageButton
@@ -81,6 +85,34 @@ class ProfileActivity : AppCompatActivity() {
                 R.id.navigation_search -> {
                     // Handle the search icon click
                     finish()
+                    startActivity(Intent(this, TouristSearchActivity::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    true
+                }
+                R.id.navigation_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        // Set the map menu item as selected
+        bottomNavigationView.selectedItemId = R.id.navigation_profile
+
+        // Set listener for BottomNavigationView items
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, TouristScreen::class.java))
+                    true
+                }
+                R.id.navigation_search -> {
                     startActivity(Intent(this, TouristSearchActivity::class.java))
                     true
                 }
