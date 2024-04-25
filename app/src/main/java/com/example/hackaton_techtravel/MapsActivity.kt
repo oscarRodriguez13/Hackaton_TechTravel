@@ -23,6 +23,7 @@ import com.google.android.gms.location.LocationCallback
 import com.google.android.gms.location.LocationRequest
 import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.osmdroid.api.IMapController
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.RoadManager
@@ -64,6 +65,36 @@ class MapsActivity : AppCompatActivity() {
         val policy = StrictMode.ThreadPolicy.Builder().permitAll().build()
         StrictMode.setThreadPolicy(policy)
         setUpMarkers()
+
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+
+        // Set the map menu item as selected
+        bottomNavigationView.selectedItemId = R.id.navigation_map
+
+        // Set listener for BottomNavigationView items
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, TouristScreen::class.java))
+                    true
+                }
+                R.id.navigation_search -> {
+                    startActivity(Intent(this, TouristSearchActivity::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    true
+                }
+                R.id.navigation_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
+
     }
 
     private fun setUpMarkers() {
