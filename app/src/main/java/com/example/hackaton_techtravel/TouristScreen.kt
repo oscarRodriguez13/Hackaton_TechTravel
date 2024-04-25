@@ -33,6 +33,8 @@ class TouristScreen : AppCompatActivity() {
         recyclerView.adapter = adapter
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        // Set the map menu item as selected
+        bottomNavigationView.selectedItemId = R.id.navigation_home
 
         // Set listener for BottomNavigationView items
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
