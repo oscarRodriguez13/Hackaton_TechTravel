@@ -6,10 +6,13 @@ import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
 import de.hdodenhof.circleimageview.CircleImageView
+import java.util.Locale
 
 class SearchAdapter(
-    private val avistamientos: List<Avistamiento>
+    private var avistamientos: List<Avistamiento>
 ) : RecyclerView.Adapter<SearchAdapter.ProfileViewHolder>() {
+
+    private var filteredAvistamientos = avistamientos
 
     inner class ProfileViewHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {
         private val profileImage1: CircleImageView = itemView.findViewById(R.id.profile_image1)
@@ -17,37 +20,11 @@ class SearchAdapter(
         private val descripcion1: TextView = itemView.findViewById(R.id.descripcion1)
         private val fecha1: TextView = itemView.findViewById(R.id.fecha1)
 
-        private val profileImage2: CircleImageView = itemView.findViewById(R.id.profile_image2)
-        private val titulo2: TextView = itemView.findViewById(R.id.titulo2)
-        private val descripcion2: TextView = itemView.findViewById(R.id.descripcion2)
-        private val fecha2: TextView = itemView.findViewById(R.id.fecha2)
-
-        private val profileImage3: CircleImageView = itemView.findViewById(R.id.profile_image3)
-        private val titulo3: TextView = itemView.findViewById(R.id.titulo3)
-        private val descripcion3: TextView = itemView.findViewById(R.id.descripcion3)
-        private val fecha3: TextView = itemView.findViewById(R.id.fecha3)
-
-        fun bind(avistamientos: List<Avistamiento>) {
-            if (avistamientos.size >= 1) {
-                profileImage1.setImageResource(avistamientos[0].image)
-                titulo1.text = avistamientos[0].tipoAve
-                descripcion1.text = avistamientos[0].descripcion
-                fecha1.text = avistamientos[0].fecha
-            }
-
-            if (avistamientos.size >= 2) {
-                profileImage2.setImageResource(avistamientos[1].image)
-                titulo2.text = avistamientos[1].tipoAve
-                descripcion2.text = avistamientos[1].descripcion
-                fecha2.text = avistamientos[1].fecha
-            }
-
-            if (avistamientos.size >= 3) {
-                profileImage3.setImageResource(avistamientos[2].image)
-                titulo3.text = avistamientos[2].tipoAve
-                descripcion3.text = avistamientos[2].descripcion
-                fecha3.text = avistamientos[2].fecha
-            }
+        fun bind(avistamiento: Avistamiento) {
+            profileImage1.setImageResource(avistamiento.image)
+            titulo1.text = avistamiento.tipoAve
+            descripcion1.text = avistamiento.descripcion
+            fecha1.text = avistamiento.fecha
         }
     }
 
@@ -57,11 +34,21 @@ class SearchAdapter(
     }
 
     override fun onBindViewHolder(holder: ProfileViewHolder, position: Int) {
-        val sublist = avistamientos.subList(position * 3, minOf(position * 3 + 3, avistamientos.size))
-        holder.bind(sublist)
+        holder.bind(filteredAvistamientos[position])
     }
 
     override fun getItemCount(): Int {
-        return (avistamientos.size + 2) / 3
+        return filteredAvistamientos.size
+    }
+
+    fun filter(text: String) {
+        if (text.isEmpty()) {
+            filteredAvistamientos = avistamientos
+        } else {
+            filteredAvistamientos = avistamientos.filter {
+                it.tipoAve.toLowerCase(Locale.getDefault()).contains(text.toLowerCase(Locale.getDefault()))
+            }
+        }
+        notifyDataSetChanged()
     }
 }
