@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.activities
 
 import android.Manifest
 import android.annotation.SuppressLint
@@ -6,22 +6,17 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.content.pm.PackageManager
-import android.graphics.Color
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.StrictMode
 import android.provider.MediaStore
-import android.util.Log
 import android.view.inputmethod.EditorInfo
 import android.widget.Toast
 import androidx.core.content.ContextCompat
-import com.example.hackaton_techtravel.PermissionCodes.Companion.CAMERA_PERMISSION_CODE
-import com.example.hackaton_techtravel.PermissionCodes.Companion.LOCATION_PERMISSION_CODE
+import com.example.hackaton_techtravel.data.PermissionCodes.Companion.CAMERA_PERMISSION_CODE
+import com.example.hackaton_techtravel.data.PermissionCodes.Companion.LOCATION_PERMISSION_CODE
 import com.example.hackaton_techtravel.databinding.ActivityMapsBinding
 import com.google.android.gms.location.FusedLocationProviderClient
-import com.google.android.gms.location.LocationCallback
-import com.google.android.gms.location.LocationRequest
-import com.google.android.gms.location.LocationResult
 import com.google.android.gms.location.LocationServices
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.osmdroid.api.IMapController
@@ -32,7 +27,7 @@ import org.osmdroid.tileprovider.tilesource.TileSourceFactory
 import org.osmdroid.util.GeoPoint
 import org.osmdroid.views.overlay.Marker
 import org.osmdroid.views.overlay.Polyline
-import java.util.ArrayList
+import com.example.hackaton_techtravel.R
 
 
 class MapsActivity : AppCompatActivity() {
@@ -76,7 +71,7 @@ class MapsActivity : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    startActivity(Intent(this, TouristScreen::class.java))
+                    startActivity(Intent(this, TouristScreenActivity::class.java))
                     true
                 }
                 R.id.navigation_search -> {

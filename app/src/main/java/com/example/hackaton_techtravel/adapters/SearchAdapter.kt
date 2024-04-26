@@ -1,10 +1,12 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.adapters
 
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackaton_techtravel.data.Avistamiento
+import com.example.hackaton_techtravel.R
 import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 

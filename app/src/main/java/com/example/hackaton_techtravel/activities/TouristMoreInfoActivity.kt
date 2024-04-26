@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.activities
 
 import android.content.Intent
 import android.net.Uri
@@ -6,11 +6,11 @@ import androidx.appcompat.app.AppCompatActivity
 import android.os.Bundle
 import android.widget.ImageView
 import android.widget.TextView
-import android.widget.Toast
+import com.example.hackaton_techtravel.R
+import com.example.hackaton_techtravel.data.TouristicPlace
 import com.google.android.material.floatingactionbutton.FloatingActionButton
-import com.squareup.picasso.Picasso
 
-class TouristMoreInfo: AppCompatActivity() {
+class TouristMoreInfoActivity: AppCompatActivity() {
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         setContentView(R.layout.place_info)

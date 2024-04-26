@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.adapters
 
 import android.content.Intent
 import android.view.LayoutInflater
@@ -9,6 +9,9 @@ import android.widget.Filterable
 import android.widget.ImageView
 import android.widget.TextView
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackaton_techtravel.R
+import com.example.hackaton_techtravel.data.TouristicPlace
+import com.example.hackaton_techtravel.activities.TouristMoreInfoActivity
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
@@ -39,7 +42,7 @@ class TouristScreenTouristicPlaceAdapter(
         // Set the click listener for the floating button
         holder.floatingButton1.setOnClickListener {
             // too soon
-            val intent = Intent(holder.imageView.context, TouristMoreInfo::class.java)
+            val intent = Intent(holder.imageView.context, TouristMoreInfoActivity::class.java)
             intent.putExtra("object", currentItem)
             holder.itemView.context.startActivity(intent)
         }

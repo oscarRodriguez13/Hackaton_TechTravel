@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.activities
 
 import android.content.Context
 import android.content.Intent
@@ -6,6 +6,9 @@ import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.hackaton_techtravel.R
+import com.example.hackaton_techtravel.adapters.TouristScreenTouristicPlaceAdapter
+import com.example.hackaton_techtravel.data.TouristicPlace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.BufferedReader
 import java.io.IOException
@@ -13,7 +16,7 @@ import java.io.InputStream
 import java.io.InputStreamReader
 private const val FILE_NAME = "touristicPlaces.txt"
 
-class TouristScreen : AppCompatActivity() {
+class TouristScreenActivity : AppCompatActivity() {
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -40,7 +43,7 @@ class TouristScreen : AppCompatActivity() {
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
-                    startActivity(Intent(this, TouristScreen::class.java))
+                    startActivity(Intent(this, TouristScreenActivity::class.java))
                     true
                 }
                 R.id.navigation_search -> {

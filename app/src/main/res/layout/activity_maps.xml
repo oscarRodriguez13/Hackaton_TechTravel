@@ -6,7 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:background="#FFFFFF"
     android:textColor="@android:color/black"
-    tools:context=".MapsActivity">
+    tools:context=".activities.MapsActivity">
 
     <RelativeLayout
         android:layout_width="match_parent"
@@ -134,8 +134,7 @@
             android:layout_alignParentEnd="true"
             android:layout_alignBottom="@+id/mapBottomLayout"
             android:layout_marginVertical="100dp"
-            android:layout_marginEnd="15dp"
-            />
+            android:layout_marginEnd="15dp" />
 
         <com.google.android.material.bottomnavigation.BottomNavigationView
             android:id="@+id/bottom_navigation"

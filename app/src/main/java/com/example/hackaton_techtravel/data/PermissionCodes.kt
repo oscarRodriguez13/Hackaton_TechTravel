@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.data
 
 class PermissionCodes {
     companion object {

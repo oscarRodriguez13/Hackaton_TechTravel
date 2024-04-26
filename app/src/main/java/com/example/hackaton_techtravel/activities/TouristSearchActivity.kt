@@ -1,4 +1,4 @@
-package com.example.hackaton_techtravel
+package com.example.hackaton_techtravel.activities
 
 import android.content.Intent
 import android.os.Bundle
@@ -7,6 +7,9 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import android.widget.EditText
+import com.example.hackaton_techtravel.data.Avistamiento
+import com.example.hackaton_techtravel.R
+import com.example.hackaton_techtravel.adapters.SearchAdapter
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.util.Locale
 
@@ -69,7 +72,7 @@ class TouristSearchActivity : AppCompatActivity() {
             when (menuItem.itemId) {
                 R.id.navigation_home -> {
                     finish()
-                    startActivity(Intent(this, TouristScreen::class.java))
+                    startActivity(Intent(this, TouristScreenActivity::class.java))
                     true
                 }
                 R.id.navigation_search -> {
