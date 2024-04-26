@@ -42,7 +42,9 @@
             android:theme="@style/AppTheme"></activity>
         <activity
             android:name=".activities.MapsActivity"
-            android:exported="false" />
+            android:exported="false"
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false"
