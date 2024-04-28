@@ -14,6 +14,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.hackaton_techtravel.R
 import com.example.hackaton_techtravel.data.Review
 import com.example.hackaton_techtravel.data.TouristicPlace
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import com.google.android.material.floatingactionbutton.FloatingActionButton
 import com.squareup.picasso.Picasso
 
@@ -63,6 +64,33 @@ class TouristMoreInfoActivity: AppCompatActivity() {
 
         // Configura el adaptador del RecyclerView con las reseñas del lugar turístico
         recyclerView.adapter = ReviewAdapter(derivedObject.reviews)
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        // Set the map menu item as selected
+        bottomNavigationView.selectedItemId = R.id.navigation_home
+
+        // Set listener for BottomNavigationView items
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, TouristScreenActivity::class.java))
+                    true
+                }
+                R.id.navigation_search -> {
+                    startActivity(Intent(this, TouristSearchActivity::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    true
+                }
+                R.id.navigation_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
+        }
     }
 
     inner class ReviewAdapter(private val reviews: List<Review>) : RecyclerView.Adapter<ReviewAdapter.ReviewViewHolder>() {

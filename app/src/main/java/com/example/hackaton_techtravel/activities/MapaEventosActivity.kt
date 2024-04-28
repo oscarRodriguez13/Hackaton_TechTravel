@@ -1,6 +1,7 @@
 package com.example.hackaton_techtravel.activities
 
 import android.annotation.SuppressLint
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.graphics.Bitmap
 import android.graphics.drawable.BitmapDrawable
@@ -24,6 +25,7 @@ import com.example.hackaton_techtravel.R
 import com.example.hackaton_techtravel.data.PermissionCodes
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.google.android.material.bottomnavigation.BottomNavigationView
 import org.osmdroid.api.IMapController
 import org.osmdroid.bonuspack.routing.OSRMRoadManager
 import org.osmdroid.bonuspack.routing.Road
@@ -94,6 +96,33 @@ class MapaEventosActivity : AppCompatActivity(), SensorEventListener, LocationLi
 
         centerButton.setOnClickListener {
             centerCameraOnUser()
+        }
+
+        val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
+        // Set the map menu item as selected
+        bottomNavigationView.selectedItemId = R.id.navigation_home
+
+        // Set listener for BottomNavigationView items
+        bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.navigation_home -> {
+                    startActivity(Intent(this, TouristScreenActivity::class.java))
+                    true
+                }
+                R.id.navigation_search -> {
+                    startActivity(Intent(this, TouristSearchActivity::class.java))
+                    true
+                }
+                R.id.navigation_map -> {
+                    startActivity(Intent(this, MapsActivity::class.java))
+                    true
+                }
+                R.id.navigation_profile -> {
+                    startActivity(Intent(this, ProfileActivity::class.java))
+                    true
+                }
+                else -> false
+            }
         }
 
     }
