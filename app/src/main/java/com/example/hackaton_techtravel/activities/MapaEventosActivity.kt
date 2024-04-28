@@ -100,7 +100,7 @@ class MapaEventosActivity : AppCompatActivity(), SensorEventListener, LocationLi
 
         val bottomNavigationView: BottomNavigationView = findViewById(R.id.bottom_navigation)
         // Set the map menu item as selected
-        bottomNavigationView.selectedItemId = R.id.navigation_home
+        bottomNavigationView.selectedItemId = R.id.navigation_map
 
         // Set listener for BottomNavigationView items
         bottomNavigationView.setOnNavigationItemSelectedListener { menuItem ->
