@@ -1,8 +1,8 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
     <string-array name="avistamientos_array">
-        <item>Avistamiento Climatico</item>
+        <item>Variante Climatica</item>
         <item>Avistamiento Animal</item>
-        <item>Avistamiento Camara</item>
+        <item>Eventos</item>
     </string-array>
 </resources>

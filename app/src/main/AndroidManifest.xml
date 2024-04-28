@@ -23,23 +23,28 @@
         android:usesCleartextTraffic="true"
         tools:targetApi="31">
         <activity
-            android:name=".activities.DetallesBusquedaActivity"
+            android:name=".activities.MapaAveActivity"
             android:exported="false" />
+        <activity
+            android:name=".activities.DetallesBusquedaActivity"
+            android:exported="false"
+            android:label="Detalles"
+            android:theme="@style/AppTheme"  />
         <activity
             android:name=".activities.TouristScreenActivity"
             android:exported="false"
             android:label="Home"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.TouristSearchActivity"
             android:exported="false"
             android:label="Busqueda"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.TouristMoreInfoActivity"
             android:exported="false"
             android:label="Más información"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.MapsActivity"
             android:exported="false"
@@ -49,12 +54,12 @@
             android:name=".activities.ProfileActivity"
             android:exported="false"
             android:label="Perfil"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.CrearCuentaActivity"
             android:exported="false"
             android:label="Login"
-            android:theme="@style/AppTheme"></activity>
+            android:theme="@style/AppTheme" />
         <activity
             android:name=".activities.IniciarSesionActivity"
             android:exported="true"

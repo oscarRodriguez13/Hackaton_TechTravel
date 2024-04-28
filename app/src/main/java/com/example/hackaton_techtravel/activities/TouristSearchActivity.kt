@@ -32,7 +32,9 @@ class TouristSearchActivity : AppCompatActivity() {
 
         // Instanciar y configurar el adaptador y RecyclerView para el primer conjunto de datos
         val recyclerView1: RecyclerView = findViewById(R.id.recyclerView1)
-        searchAdapter1 = SearchAdapter(avistamientos1)
+        searchAdapter1 = SearchAdapter(avistamientos1) { avis1 ->
+            abrirDetalles(avis1)
+        }
         recyclerView1.adapter = searchAdapter1
         recyclerView1.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -45,7 +47,9 @@ class TouristSearchActivity : AppCompatActivity() {
 
         // Instanciar y configurar el adaptador y RecyclerView para el segundo conjunto de datos
         val recyclerView2: RecyclerView = findViewById(R.id.recyclerView2)
-        searchAdapter2 = SearchAdapter(avistamientos2)
+        searchAdapter2 = SearchAdapter(avistamientos2) { avis2 ->
+            abrirDetalles(avis2)
+        }
         recyclerView2.adapter = searchAdapter2
         recyclerView2.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -58,7 +62,9 @@ class TouristSearchActivity : AppCompatActivity() {
 
         // Instanciar y configurar el adaptador y RecyclerView para el tercer conjunto de datos
         val recyclerView3: RecyclerView = findViewById(R.id.recyclerView3)
-        searchAdapter3 = SearchAdapter(avistamientos3)
+        searchAdapter3 = SearchAdapter(avistamientos3){ avis3 ->
+            abrirDetalles(avis3)
+        }
         recyclerView3.adapter = searchAdapter3
         recyclerView3.layoutManager = LinearLayoutManager(this, LinearLayoutManager.HORIZONTAL, false)
 
@@ -106,5 +112,13 @@ class TouristSearchActivity : AppCompatActivity() {
                 false
             }
         }
+    }
+
+    private fun abrirDetalles(avistamiento: Avistamiento) {
+        val intent = Intent(this, DetallesBusquedaActivity::class.java)
+        // Aquí puedes agregar datos adicionales al intent si es necesario
+        intent.putExtra("tipoAve", avistamiento.tipoAve)
+        intent.putExtra("descripcion", avistamiento.descripcion)
+        startActivity(intent)
     }
 }

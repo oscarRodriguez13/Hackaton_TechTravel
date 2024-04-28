@@ -6,6 +6,8 @@ import android.app.Activity
 import android.content.Intent
 import androidx.appcompat.app.AppCompatActivity
 import android.content.pm.PackageManager
+import android.graphics.Bitmap
+import android.graphics.drawable.BitmapDrawable
 import android.location.Geocoder
 import android.os.Bundle
 import android.os.StrictMode
@@ -94,11 +96,15 @@ class MapsActivity : AppCompatActivity() {
 
     private fun setUpMarkers() {
         // 5.607519, -75.450010
-        val marker1 = createMarker(GeoPoint(5.607519, -75.450010), "Aguadas", "Avistamiento Climatico", 0)
+        val marker1 = createMarker(GeoPoint(5.607519, -75.450010), "Avistamiento", "Ave Guacharaca", R.drawable.icn_ave)
         // 5.614931, -75.463819
-        val marker2 = createMarker(GeoPoint(5.614931, -75.463819), "Aguadas", "Avistamiento Animal", 0)
+        val marker2 = createMarker(GeoPoint(5.614931, -75.463819), "Evento", "Encuentro cultursl ", R.drawable.icn_marcador_evento)
         // 5.615662, -75.463461
-        val marker3 = createMarker(GeoPoint(5.615662, -75.463461), "Monserrate", "Avistamiento Camara", 0)
+        val marker3 = createMarker(GeoPoint(5.615662, -75.463461), "Tu", "", 0)
+
+        val mapController: IMapController = binding.osmMap.controller
+        mapController.setCenter(GeoPoint(5.615662,-75.463461))
+        mapController.setZoom(18.0)
 
         marker1?.let { binding.osmMap.overlays.add(it) }
         marker2?.let { binding.osmMap.overlays.add(it) }
@@ -244,8 +250,21 @@ class MapsActivity : AppCompatActivity() {
         desc?.let { marker.subDescription = it }
 
         if (iconID != 0) {
-            val myIcon = resources.getDrawable(iconID, theme)
-            marker.icon = myIcon
+            val customMarkerDrawable = ContextCompat.getDrawable(this, iconID)
+
+            // Escalar la imagen al tamaño predeterminado (48x48 píxeles)
+            val width = 48
+            val height = 48
+            val scaledDrawable = Bitmap.createScaledBitmap(
+                (customMarkerDrawable as BitmapDrawable).bitmap,
+                width,
+                height,
+                false
+            )
+
+            // Asignar la imagen escalada al marcador
+            marker.icon = BitmapDrawable(resources, scaledDrawable)
+
         }
         marker.position = p
         marker.setAnchor(Marker.ANCHOR_CENTER, Marker.ANCHOR_BOTTOM)

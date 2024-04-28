@@ -11,7 +11,8 @@ import de.hdodenhof.circleimageview.CircleImageView
 import java.util.Locale
 
 class SearchAdapter(
-    private var avistamientos: List<Avistamiento>
+    private var avistamientos: List<Avistamiento>,
+    private val onClick: (Avistamiento) -> Unit
 ) : RecyclerView.Adapter<SearchAdapter.ProfileViewHolder>() {
 
     private var filteredAvistamientos = avistamientos
@@ -27,6 +28,8 @@ class SearchAdapter(
             titulo1.text = avistamiento.tipoAve
             descripcion1.text = avistamiento.descripcion
             fecha1.text = avistamiento.fecha
+
+            itemView.setOnClickListener { onClick(avistamiento) }
         }
     }
 
