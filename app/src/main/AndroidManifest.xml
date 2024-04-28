@@ -50,6 +50,11 @@
             android:exported="false"
             android:theme="@style/AppTheme"/>
 
+        <activity android:name=".activities.Reviews"
+            android:exported="false"
+            android:label="Reviews"
+            android:theme="@style/AppTheme"/>
+
         <activity
             android:name=".activities.ProfileActivity"
             android:exported="false"
