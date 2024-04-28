@@ -8,6 +8,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.hackaton_techtravel.R
 import com.example.hackaton_techtravel.adapters.TouristScreenTouristicPlaceAdapter
+import com.example.hackaton_techtravel.data.Review
 import com.example.hackaton_techtravel.data.TouristicPlace
 import com.google.android.material.bottomnavigation.BottomNavigationView
 import java.io.BufferedReader
@@ -91,9 +92,18 @@ class TouristScreenActivity : AppCompatActivity() {
                     for (coord in coordinates) {
                         coordinateArray.add(coord)
                     }
-                    // Create an TouristicPlace object and add it to the list
-                    val TouristicPlace = TouristicPlace(name, picture, scores, coordinateArray)
-                    touristicPlaceList.add(TouristicPlace)
+                    // Create a list of Review with predefined data
+                    val reviews = listOf(
+                        Review("User 1", 4.5f, "Buen lugar", "user_icon.png"),
+                        Review("User 2", 3.0f, "le faltaban cosas.", "user_icon.png"),
+                        Review("User 3", 4.5f, "Me gusto mucho el ambiente!", "user_icon.png"),
+                        Review("User 4", 3.0f, "No me gusto el el estilo .", "user_icon.png")
+                        // ...
+                    )
+
+                    // Create a TouristicPlace object and add it to the list
+                    val touristicPlace = TouristicPlace(name, picture, scores, coordinateArray, reviews)
+                    touristicPlaceList.add(touristicPlace)
                 }
             }
 
