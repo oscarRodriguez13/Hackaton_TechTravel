@@ -33,17 +33,8 @@ class TouristMoreInfoActivity: AppCompatActivity() {
             startActivity(intent)
         }*/
         navigateButton.setOnClickListener {
-            val latitude = derivedObject.coordinates[0]
-            val longitude = derivedObject.coordinates[1]
-
-            // Construct the URI for Google Maps navigation
-            val uri = "http://maps.google.com/maps?saddr=Current+Location&daddr=$latitude,$longitude"
-
             // Create an Intent with ACTION_VIEW and the URI
-            val intent = Intent(Intent.ACTION_VIEW, Uri.parse(uri))
-
-            // Set the package to Google Maps
-            intent.setPackage("com.google.android.apps.maps")
+            val intent = Intent(this, MapaEventosActivity::class.java)
             startActivity(intent)
         }
 
