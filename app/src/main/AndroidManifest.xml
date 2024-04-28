@@ -26,6 +26,9 @@
             android:name=".activities.MapaAveActivity"
             android:exported="false" />
         <activity
+            android:name=".activities.MapaEventosActivity"
+            android:exported="false" />
+        <activity
             android:name=".activities.DetallesBusquedaActivity"
             android:exported="false"
             android:label="Detalles"

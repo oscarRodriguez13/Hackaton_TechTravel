@@ -17,8 +17,8 @@
 
         <ImageView
             android:id="@+id/InfoPlaceImage"
-            android:layout_width="300dp"
-            android:layout_height="300dp"
+            android:layout_width="250dp"
+            android:layout_height="250dp"
             android:scaleType="centerInside"
             android:src="@drawable/img_evento"
             android:layout_gravity="center_horizontal" />
@@ -45,25 +45,23 @@
             android:layout_gravity="center_horizontal"
             android:gravity="center"/>
 
+        <RatingBar
+            android:id="@+id/rating_bar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:numStars="5"
+            android:rating="0"
+            android:stepSize="0.5"
+            android:layout_marginBottom="16dp"
+            android:isIndicator="true"
+            android:layout_below="@id/InfoPlaceDescription"/>
+
     </LinearLayout>
-
-
-    <RatingBar
-        android:id="@+id/rating_bar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:numStars="5"
-        android:rating="0"
-        android:stepSize="0.5"
-        android:layout_marginBottom="16dp"
-        android:isIndicator="true"
-        app:layout_constraintTop_toBottomOf="@id/PlaceDescription"/>
 
     <androidx.recyclerview.widget.RecyclerView
         android:id="@+id/recycler_view"
         android:layout_width="match_parent"
         android:layout_height="0dp"
-        app:layout_constraintTop_toBottomOf="@id/rating_bar"
         app:layout_constraintBottom_toBottomOf="parent"/>
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
@@ -73,8 +71,8 @@
         android:layout_marginEnd="16dp"
         android:layout_marginBottom="16dp"
         android:src="@drawable/share"
-        app:layout_constraintBottom_toTopOf="@+id/navigate"
-        app:layout_constraintEnd_toEndOf="parent" />
+        android:layout_above="@+id/navigate"
+        android:layout_alignParentEnd="true" />
 
     <com.google.android.material.floatingactionbutton.FloatingActionButton
         android:id="@+id/navigate"
